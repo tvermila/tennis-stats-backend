@@ -1,5 +1,5 @@
+import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, OneToMany } from "typeorm"
 import { Result } from "src/results/result.entity"
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm"
 
 
 @Entity()
@@ -25,5 +25,11 @@ export class Player {
 
   @Column({ default: 0 })
   ties: number
+
+  @OneToMany(type => Result, result => result.player)
+  results: Result[];
+
+  // @ManyToMany(type => Result, result => result.players)
+  // results: Result[]
 
 }
