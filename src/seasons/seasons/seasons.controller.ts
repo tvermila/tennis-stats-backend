@@ -1,7 +1,9 @@
 import { SeasonsService } from './seasons.service';
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { Season } from '../season.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('seasons')
 export class SeasonsController {
   constructor(private seasonService: SeasonsService) {}

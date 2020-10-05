@@ -35,3 +35,6 @@ lerna-debug.log*
 
 # SQLite database
 db
+
+# Environment variables
+.env

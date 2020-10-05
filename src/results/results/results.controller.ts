@@ -1,13 +1,16 @@
+import { JwtAuthGuard } from './../../auth/jwt-auth.guard';
 import { ResultsService } from './results.service';
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { Result } from '../result.entity';
 
+@UseGuards(JwtAuthGuard)
 @Controller('results')
 export class ResultsController {
   constructor(private resultService: ResultsService) {}
 
   @Get()
   async results(): Promise<Result[]> {
+    console.log('ALL RESULTS CONTROLLER')
     return this.resultService.findAll();
   }
 

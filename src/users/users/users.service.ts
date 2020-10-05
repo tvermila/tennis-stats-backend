@@ -18,6 +18,11 @@ export class UsersService {
     return await this.userRepository.findOneOrFail(id)
   }
 
+  async findByUsername(userName: string): Promise<User> {
+    console.log('FIND BY USERNAME IN USER SERVICE')
+    return await this.userRepository.findOne({ userName })
+  }
+
   async create(user: User): Promise<User> {
     return await this.userRepository.save(user);
   }
