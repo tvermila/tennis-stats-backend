@@ -1,3 +1,4 @@
+import { SeasonsModule } from './../seasons/seasons.module';
 import { Result } from './result.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
@@ -8,7 +9,8 @@ import { PlayersModule } from 'src/players/players.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Result]),
-    PlayersModule
+    PlayersModule,
+    SeasonsModule
   ],
   providers: [ResultsService],
   controllers: [ResultsController]

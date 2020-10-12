@@ -18,6 +18,10 @@ export class PlayersService {
     return await this.playerRepository.findOneOrFail(id)
   }
 
+  async findByNickname(nickname: string): Promise<Player> {
+    return await this.playerRepository.findOne({ nickName: nickname })
+  }
+
   async create(player: Player): Promise<Player> {
     return await this.playerRepository.save(player);
   }

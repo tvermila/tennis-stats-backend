@@ -12,6 +12,10 @@ export class SeasonsService {
     return await this.seasonRepository.find();
   }
 
+  async findBySeason(season: string): Promise<Season> {
+    return await this.seasonRepository.findOne({ season })
+  }
+
   async create(season: Season): Promise<Season> {
     return await this.seasonRepository.save(season);
   }

@@ -9,6 +9,7 @@ import { SeasonsController } from './seasons/seasons.controller';
     TypeOrmModule.forFeature([Season])
   ],
   providers: [SeasonsService],
-  controllers: [SeasonsController]
+  controllers: [SeasonsController],
+  exports: [SeasonsService]
 })
 export class SeasonsModule {}
