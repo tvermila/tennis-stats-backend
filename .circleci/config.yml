@@ -11,7 +11,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: frontend-deps-{{ checksum "package-lock.json" }}
+          key: backend-deps-{{ checksum "package-lock.json" }}
   build:
     docker:
       - image: circleci/node:12
@@ -19,13 +19,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - frontend-deps-{{ checksum "package-lock.json" }}
-            - frontend-deps
+            - backend-deps-{{ checksum "package-lock.json" }}
+            - backend-deps
       - run: CI=false npm run build
       - persist_to_workspace:
           root: .
           paths:
-            - build/*
+            - dist/*
           
   deploy:
     docker:
@@ -39,7 +39,7 @@ jobs:
           at: .
       - run: cd dist && ls -la
       - run: ssh-keyscan -H $ATLANTIC_HOST >> ~/.ssh/known_hosts
-      - run: rsync -avz build/ tomppa@$ATLANTIC_HOST:/home/tomppa/Docker/nginx/www/tennis.tvermila.fi
+      - run: rsync -avz --exclude 'db' dist/ tomppa@$ATLANTIC_HOST:/home/tomppa/Docker/backend/tennis.tvermila.fi
 
 workflows:
   build-and-deploy:
