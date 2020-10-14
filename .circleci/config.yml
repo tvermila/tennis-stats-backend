@@ -1,0 +1,56 @@
+version: 2.1
+
+jobs:
+  deps:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - run: echo "*** INSTALLING DEPENDENCIES ***"
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: backend-deps-{{ checksum "package-lock.json" }}
+  build:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - backend-deps-{{ checksum "package-lock.json" }}
+            - backend-deps
+      - run: CI=false npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist/*
+          
+  deploy:
+    docker:
+      - image: eeacms/rsync
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "ff:77:95:b1:95:4c:75:3a:7f:ca:66:3b:dd:4e:4d:b5"
+      - attach_workspace:
+          at: .
+      - run: cd dist && ls -la
+      - run: ssh-keyscan -H $ATLANTIC_HOST >> ~/.ssh/known_hosts
+      - run: rsync -avz --exclude 'db' dist/ tomppa@$ATLANTIC_HOST:/home/tomppa/Docker/backend/tennis.tvermila.fi
+
+workflows:
+  build-and-deploy:
+    jobs:
+      - deps:
+          filters:
+            branches:
+              only: master
+      - build:
+          requires:
+            - deps          
+      - deploy:
+          requires:
+            - build
