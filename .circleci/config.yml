@@ -40,7 +40,7 @@ jobs:
       - run: cd dist && ls -la
       - run: ssh-keyscan -H $ATLANTIC_HOST >> ~/.ssh/known_hosts
       - run: rsync -avz --exclude 'db' dist/ tomppa@$ATLANTIC_HOST:/home/tomppa/Docker/backend/tennis.tvermila.fi
-      - run: ssh tomppa@$ATLANTIC_HOST bash -c "cd Docker/backend && docker-compose restart"
+      - run: ssh -t tomppa@$ATLANTIC_HOST "cd /home/tomppa/Docker/backend && docker-compose restart"
 
 workflows:
   build-and-deploy:
