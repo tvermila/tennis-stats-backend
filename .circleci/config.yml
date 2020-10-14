@@ -6,6 +6,7 @@ jobs:
       - image: circleci/node:12
     steps:
       - checkout
+      - run: echo "*** INSTALLING DEPENDENCIES ***"
       - run: npm install
       - save_cache:
           paths:
@@ -24,7 +25,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - dist/*
+            - build/*
           
   deploy:
     docker:
@@ -36,14 +37,14 @@ jobs:
             - "ff:77:95:b1:95:4c:75:3a:7f:ca:66:3b:dd:4e:4d:b5"
       - attach_workspace:
           at: .
-      - run: cd build && ls -la
+      - run: cd dist && ls -la
       - run: ssh-keyscan -H $ATLANTIC_HOST >> ~/.ssh/known_hosts
-      - run: rsync -avz --exclude 'db' dist/ tomppa@$ATLANTIC_HOST:/home/tomppa/Docker/backend/tennis.tvermila.fi
+      - run: rsync -avz build/ tomppa@$ATLANTIC_HOST:/home/tomppa/Docker/nginx/www/tennis.tvermila.fi
 
 workflows:
   build-and-deploy:
     jobs:
-      - deps
+      - deps:
           # filters:
           #   branches:
           #     only: master
