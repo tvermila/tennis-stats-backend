@@ -7,7 +7,7 @@ import { Result } from '../result.entity';
 import CreateResultDto from './create-result.dto';
 
 @UseGuards(JwtAuthGuard)
-@Controller('results')
+@Controller('api/results')
 export class ResultsController {
   constructor(
     private resultService: ResultsService,

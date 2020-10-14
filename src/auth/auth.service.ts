@@ -8,7 +8,6 @@ export class AuthService {
   constructor(private userService: UsersService, private jwtService: JwtService) {}
 
   async validateUser(userName: string, pass: string): Promise<any> {
-    console.log('*** VALIDATING USER ***');
     const user = await this.userService.findByUsername(userName);
     if (user && (await bcrypt.compare(pass, user.password))) {
       delete user.password;

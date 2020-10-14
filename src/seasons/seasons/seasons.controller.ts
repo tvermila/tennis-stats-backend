@@ -4,7 +4,7 @@ import { Season } from '../season.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @UseGuards(JwtAuthGuard)
-@Controller('seasons')
+@Controller('api/seasons')
 export class SeasonsController {
   constructor(private seasonService: SeasonsService) {}
 

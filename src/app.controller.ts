@@ -3,7 +3,7 @@ import { AuthService } from './auth/auth.service';
 import { LocalAuthGuard } from './auth/local-auth.guards';
 import { Controller, Post, UseGuards, Request, Get } from '@nestjs/common';
 
-@Controller()
+@Controller('api')
 export class AppController {
   constructor(private authService: AuthService) {}
 

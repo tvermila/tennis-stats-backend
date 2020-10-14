@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://tomppa.fi:3000'],
+    origin: ['http://localhost:3000', 'https://tennis.tvermila.fi'],
   });
   app.use(
     rateLimit({

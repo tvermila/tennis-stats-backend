@@ -4,7 +4,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nes
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @UseGuards(JwtAuthGuard)
-@Controller('players')
+@Controller('api/players')
 export class PlayersController {
   constructor(private playerService: PlayersService) {}
 
