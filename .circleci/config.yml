@@ -34,7 +34,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "$ATLANTIC_SSH_FINGERPRINT"
+            - "ff:77:95:b1:95:4c:75:3a:7f:ca:66:3b:dd:4e:4d:b5"
       - attach_workspace:
           at: .
       - run: cd dist && ls -la
