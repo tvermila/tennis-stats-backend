@@ -13,11 +13,5 @@ export class AppController {
     console.log('LOGIN');
     return this.authService.login(req.user);
   }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('test')
-  test(@Request() req) {
-    return 'tättärää';
-  }
   
 }

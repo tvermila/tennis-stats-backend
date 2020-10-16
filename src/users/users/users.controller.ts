@@ -2,6 +2,8 @@ import { UsersService } from './users.service';
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { User } from '../user.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { identity } from 'rxjs';
+import UpdatePasswordDto from './update-password.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('api/users')
@@ -15,7 +17,7 @@ export class UsersController {
 
   @Get(':id')
   async playerById(@Param('id') id): Promise<User> {
-    return this.userService.findById(id)
+    return this.userService.findById(id);
   }
 
   @Post()
@@ -24,10 +26,10 @@ export class UsersController {
   }
 
   @Put(':id')
-  async update(@Param('id') id, @Body() userData: User): Promise<any> {
+  async updatePassword(@Param('id') id, @Body() userData: UpdatePasswordDto): Promise<any> {
     userData.id = Number(id);
-    console.log('UPDATE #', userData.id);
-    return this.userService.update(userData);
+    console.log('UPDATE PASSWORD FOR USER ID #', userData.id);
+    return this.userService.updatePassword(userData);
   }
 
   @Delete(':id')
