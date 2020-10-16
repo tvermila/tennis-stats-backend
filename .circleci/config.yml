@@ -26,7 +26,7 @@ jobs:
           root: .
           paths:
             - dist/*
-          
+
   deploy:
     docker:
       - image: eeacms/rsync
@@ -34,12 +34,12 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "ff:77:95:b1:95:4c:75:3a:7f:ca:66:3b:dd:4e:4d:b5"
+            - 'ff:77:95:b1:95:4c:75:3a:7f:ca:66:3b:dd:4e:4d:b5'
       - attach_workspace:
           at: .
       - run: cd dist && ls -la
       - run: ssh-keyscan -H $ATLANTIC_HOST >> ~/.ssh/known_hosts
-      - run: rsync -avz --exclude 'db' dist/ tomppa@$ATLANTIC_HOST:/home/tomppa/Docker/backend/tennis.tvermila.fi
+      - run: rsync -avz --exclude={'tennis.db', '.env'} dist/ tomppa@$ATLANTIC_HOST:/home/tomppa/Docker/backend/tennis.tvermila.fi
       - run: ssh -t tomppa@$ATLANTIC_HOST "cd /home/tomppa/Docker/backend && docker-compose restart"
 
 workflows:
@@ -51,7 +51,7 @@ workflows:
               only: master
       - build:
           requires:
-            - deps          
+            - deps
       - deploy:
           requires:
             - build
